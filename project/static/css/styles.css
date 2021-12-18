@@ -1,0 +1,18 @@
+body{
+    background-color:#14323A
+}
+h1,h3{
+    margin-top: 10vh;
+    color: whitesmoke;
+    font-size: 50px;
+    font-weight: medium;
+    text-align: center;
+}
+p{
+    margin-top: 4vh;
+    padding-left: 10%;
+    padding-right: 10%;
+    color: whitesmoke;
+    font-weight: light;
+    text-align: center;
+}
