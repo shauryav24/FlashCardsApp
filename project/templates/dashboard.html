@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body{ background-color: #14323A;}
+        table{ margin-top: 15vh;}
+    </style>
+    <title>Flashcards</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand navbar-dark bg-dark   fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="{{ url_for('views.index') }}">Flashcards</a>
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="/dashboard/{{username}}">Dashboard</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('views.index') }}">Log out</a>
+              </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+    <table class="table table-light table-striped table-borderless table-hover">
+      <caption class="text-center">Decks created by user are displayed here.</caption>
+        <thead class="table-dark">
+          <tr>
+            <th scope="col">No.</th>
+            <th scope="col">Deck Name</th>
+            <th scope="col">Creator</th>
+            <th scope="col" class="text-center">Score</th>
+            <th scope="col" class="text-center">Last Reviewed</th>
+            <th scope="col"class="text-center">Review</th>
+          </tr>          
+        </thead>
+        <tbody>
+          {%for d in decks%}
+          <tr>
+            <th scope="row">{{loop.index}}</th> 
+            <td><a href="/all_cards/{{d['deck_name']}}" class="text-dark">{{d["deck_name"]}}</a></td>
+            <td>{{d["creator"]}}</td>
+            <td class="text-center" data-toggle="tooltip" data-placement="bottom" title="Out of 10">{% if d["score"]%}{{d["score"]|round|int}}{%else%}-{%endif%}</td>
+            <td class="text-center">{% if d["last_reviewed"]%}{{d["last_reviewed"].strftime('%-d %b %Y')}}{%else%}Not Reviewed{%endif%}</td>
+            <td class="text-center"><a class="btn btn-dark btn-sm" href="/begin/{{d['deck_name']}}" role="button">Review</a>
+            </td>
+          </tr>
+          {%endfor%}
+      </tbody>
+    </table>
+    <div class="text-center">
+      <a class="btn btn-light btn-md " href="/create_deck/{{username}}" role="button">Create New Deck</a>
+    </div>
+    </div>
+</body>
+</html>
